@@ -20,12 +20,14 @@ if ( WEBGL.isWebGL2Available() ) {
     document.body.appendChild( renderer.domElement );
  
     const camera = new THREE.PerspectiveCamera ( 45, window.innerWidth / window.innerHeight, 1, 4000 );
-    camera.position.set( 0, 0, 300 );
+    camera.position.set( 0, 0, 600 );
  
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.autoRotate = false;
+ 
+    const clock = new THREE.Clock( );
  
     const sphereGeometry = new THREE.BufferGeometry();
     const sphereRadius = 100;
@@ -94,11 +96,53 @@ if ( WEBGL.isWebGL2Available() ) {
     earthGroup.add(atmosphere);
     
     earthGroup.rotation.z = 0.36;
- 
+
+
     scene.add(earthGroup);
+   
+    const moonRadius = sphereRadius * 0.27; 
+    const moonGeometry = new THREE.SphereGeometry(moonRadius, 32, 16);
+    
+    const moonMapUrl = "../textures/moon.png";
+    const moonMap = textureLoader.load( moonMapUrl, ( loaded ) => { renderer.render( scene, camera ); } );
+    const moonMaterial = new THREE.MeshPhongMaterial( { map: moonMap, color: 0xffffff, shininess: 5 } );
+    
+    const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+    
+    const distance = 300;
+    
+    moon.position.set( distance, 0, 0 );
+    
+    moon.rotation.y = Math.PI;
+    
+    const moonGroup = new THREE.Object3D( );
+    moonGroup.add( moon );
+    
+    moonGroup.rotation.x = 0.089;
+    
+    scene.add(moonGroup);
+    
+    let moonOrbitAngle = 0;
    
     function animate() {
         requestAnimationFrame(animate);
+        
+        const delta = clock.getDelta( ); // Elapsed time in seconds
+        
+        // UPDATE THE SCENE ACCORDING TO THE ELAPSED TIME
+        const rotation = ( delta * Math.PI * 2 ) / 1;
+        earthGroup.rotation.y += rotation;
+        atmosphere.rotation.y += rotation * 0.95;
+        
+        // Animar la órbita de la Luna alrededor de la Tierra (28 días de período)
+        // Acelerar la animación para verla mejor (dividimos entre 1000 en lugar de 28*24*3600)
+        const lunarOrbit = ( delta * Math.PI * 2 ) / 1; 
+        moonOrbitAngle += lunarOrbit;
+        
+        // Posicionar la Luna en órbita
+        moonGroup.position.x = distance * Math.cos(moonOrbitAngle);
+        moonGroup.position.z = distance * Math.sin(moonOrbitAngle);
+        
         controls.update();
         renderer.render(scene, camera);
     }

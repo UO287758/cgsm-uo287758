@@ -20,7 +20,7 @@ if ( WEBGL.isWebGL2Available() ) {
     document.body.appendChild( renderer.domElement );
  
     const camera = new THREE.PerspectiveCamera ( 45, window.innerWidth / window.innerHeight, 1, 4000 );
-    camera.position.set( 0, 0, 300 );
+    camera.position.set( 0, 0, 600 );
  
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -94,8 +94,31 @@ if ( WEBGL.isWebGL2Available() ) {
     earthGroup.add(atmosphere);
     
     earthGroup.rotation.z = 0.36;
- 
+
+
     scene.add(earthGroup);
+   
+    const moonRadius = sphereRadius * 0.27; 
+    const moonGeometry = new THREE.SphereGeometry(moonRadius, 32, 16);
+    
+    const moonMapUrl = "../textures/moon.png";
+    const moonMap = textureLoader.load( moonMapUrl, ( loaded ) => { renderer.render( scene, camera ); } );
+    const moonMaterial = new THREE.MeshPhongMaterial( { map: moonMap, color: 0xffffff, shininess: 5 } );
+    
+    const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+    
+    const distance = 300;
+    
+    moon.position.set( distance, 0, 0 );
+    
+    moon.rotation.y = Math.PI;
+    
+    const moonGroup = new THREE.Object3D( );
+    moonGroup.add( moon );
+    
+    moonGroup.rotation.x = 0.089;
+    
+    scene.add(moonGroup);
    
     function animate() {
         requestAnimationFrame(animate);

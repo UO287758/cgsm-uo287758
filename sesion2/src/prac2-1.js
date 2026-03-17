@@ -20,7 +20,7 @@ if ( WEBGL.isWebGL2Available() ) {
     const box = new THREE.Mesh( geometry, material );
 
     box.rotation.set( Math.PI / 5, Math.PI / 5, 0 );
-scene.add( box );
+    scene.add( box );
     renderer.render( scene, camera );
     window.addEventListener( 'resize', ( ) => {
         camera.aspect = window.innerWidth / window.innerHeight;

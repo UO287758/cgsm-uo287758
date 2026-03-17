@@ -8,18 +8,8 @@ if ( WEBGL.isWebGL2Available() ) {
  
     const scene = new THREE.Scene();
  
-    // Iluminación lateral para la esfera (simulando el sol con DirectionalLight)
-    const ambient = new THREE.AmbientLight(0xffffff, 1.0); // luz ambiental más fuerte
-    scene.add(ambient);
- 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    directionalLight.position.set(300, 200, 200);
-    directionalLight.target.position.set(0, 0, 0);
-    scene.add(directionalLight);
-    scene.add(directionalLight.target);
- 
-    const pointLight = new THREE.PointLight(0xffffff, 1.5, 500);
-    pointLight.position.set(100, 150, 150);
+    const pointLight = new THREE.PointLight(0xffffff, 100000, 5000);
+    pointLight.position.set(100, 0, 150);
     scene.add(pointLight);
  
     const pointLightHelper = new THREE.PointLightHelper(pointLight, 10);
