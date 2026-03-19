@@ -101,7 +101,6 @@ if ( WEBGL.isWebGL2Available() ) {
 
     scene.add(earthGroup);
    
-    // Sun shader uniforms setup
     const NOISEMAP = '../textures/cloud.png';
     const SUNMAP = '../textures/lavatile.png';
     const uniforms = {
@@ -124,12 +123,6 @@ if ( WEBGL.isWebGL2Available() ) {
         vertexShader,
         fragmentShader
     } );
-
-    // const sunMaterial = new THREE.ShaderMaterial( {
-    //     uniforms: sunUniforms,
-    //     vertexShader: sunVertexShader,
-    //     fragmentShader: sunFragmentShader
-    // } );
    
     const moonRadius = sphereRadius * 0.27; 
     const moonGeometry = new THREE.SphereGeometry(moonRadius, 32, 16);
@@ -147,18 +140,19 @@ if ( WEBGL.isWebGL2Available() ) {
     moon.rotation.y = Math.PI;
     
     const moonGroup = new THREE.Object3D( );
+    moonGroup.position.set(-1500, 0, 0);
+    
     moonGroup.add( moon );
     
     moonGroup.rotation.z = 0.089;
     
-    earthGroup.add(moonGroup);
+    scene.add(moonGroup);
     
-    // Sun sphere - 5 times the Earth size at the light position
-    const sunRadius = sphereRadius * 5; // 500 units
+    const sunRadius = sphereRadius * 5; 
     const sunGeometry = new THREE.SphereGeometry(sunRadius, 32, 16);
     
     const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-    sun.position.set(100, 0, 150); // Same position as the point light
+    sun.position.set(100, 0, 150); 
     
     scene.add(sun);
     
@@ -169,7 +163,6 @@ if ( WEBGL.isWebGL2Available() ) {
         
         const delta = clock.getDelta( ); 
         
-        // Update sun shader time uniform
         uniforms[ "time" ].value += 0.2 * delta;
         
         const rotation = ( delta * Math.PI * 2 ) / 1;
