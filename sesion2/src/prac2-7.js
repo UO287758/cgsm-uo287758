@@ -11,11 +11,12 @@ if ( WEBGL.isWebGL2Available() ) {
     const pointLight = new THREE.PointLight(0xffffff, 100000, 5000);
     pointLight.position.set(100, 0, 150);
     scene.add(pointLight);
- 
+
     const pointLightHelper = new THREE.PointLightHelper(pointLight, 10);
     scene.add(pointLightHelper);
- 
-    const renderer = new THREE.WebGLRenderer( {antialias: true} );
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);    const renderer = new THREE.WebGLRenderer( {antialias: true} );
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
  
@@ -50,14 +51,13 @@ if ( WEBGL.isWebGL2Available() ) {
      
             sphereVertices.push(sphereRadius * sinPhi * cosTheta, sphereRadius * cosPhi, sphereRadius * sinPhi * sinTheta);
            
-            // Agregar coordenadas UV (invertidas en V para orientación correcta)
             const u = slice / widthSegments;
             const v = 1.0 - (stack / heightSegments);
             sphereUVs.push(u, v);
         }
     }
      
-    // Conectamos los vértices de cada fila con los de la siguiente
+
     for (let stack = 0; stack < heightSegments; stack++){
         for (let slice = 0; slice < widthSegments; slice++){
             const a = stack * (widthSegments + 1) + slice;
@@ -79,6 +79,7 @@ if ( WEBGL.isWebGL2Available() ) {
     const sphereMaterial = new THREE.MeshPhongMaterial( { map: map, side: THREE.DoubleSide, shininess: 80 } );
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.set(0, 0, 0);
+    sphere.rotation.z = 0.36;
    
     const atmosphereGeometry = new THREE.SphereGeometry(105, 32, 16);
     
@@ -89,14 +90,12 @@ if ( WEBGL.isWebGL2Available() ) {
     
     const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     atmosphere.position.set(0, 0, 0);
+    atmosphere.rotation.z = 0.36;
     
     const earthGroup = new THREE.Object3D();
     
     earthGroup.add(sphere);
     earthGroup.add(atmosphere);
-    
-    earthGroup.rotation.z = 0.36;
-
 
     scene.add(earthGroup);
    
@@ -109,7 +108,7 @@ if ( WEBGL.isWebGL2Available() ) {
     
     const moon = new THREE.Mesh(moonGeometry, moonMaterial);
     
-    const distance = 300;
+    const distance = 350;
     
     moon.position.set( distance, 0, 0 );
     
@@ -118,7 +117,7 @@ if ( WEBGL.isWebGL2Available() ) {
     const moonGroup = new THREE.Object3D( );
     moonGroup.add( moon );
     
-    moonGroup.rotation.x = 0.089;
+    moonGroup.rotation.z = 0.089;
     
     scene.add(moonGroup);
     
@@ -127,21 +126,17 @@ if ( WEBGL.isWebGL2Available() ) {
     function animate() {
         requestAnimationFrame(animate);
         
-        const delta = clock.getDelta( ); // Elapsed time in seconds
+        const delta = clock.getDelta( ); 
         
-        // UPDATE THE SCENE ACCORDING TO THE ELAPSED TIME
         const rotation = ( delta * Math.PI * 2 ) / 1;
         earthGroup.rotation.y += rotation;
         atmosphere.rotation.y += rotation * 0.95;
         
-        // Animar la órbita de la Luna alrededor de la Tierra (28 días de período)
-        // Acelerar la animación para verla mejor (dividimos entre 1000 en lugar de 28*24*3600)
         const lunarOrbit = ( delta * Math.PI * 2 ) / 1; 
         moonOrbitAngle += lunarOrbit;
         
-        // Posicionar la Luna en órbita
-        moonGroup.position.x = distance * Math.cos(moonOrbitAngle);
-        moonGroup.position.z = distance * Math.sin(moonOrbitAngle);
+        moon.position.x = distance * Math.cos(moonOrbitAngle);
+        moon.position.z = distance * Math.sin(moonOrbitAngle);
         
         controls.update();
         renderer.render(scene, camera);
