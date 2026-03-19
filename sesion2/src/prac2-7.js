@@ -15,8 +15,7 @@ if ( WEBGL.isWebGL2Available() ) {
     const pointLightHelper = new THREE.PointLightHelper(pointLight, 10);
     scene.add(pointLightHelper);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);    const renderer = new THREE.WebGLRenderer( {antialias: true} );
+    const renderer = new THREE.WebGLRenderer( {antialias: true} );
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
  
@@ -132,7 +131,7 @@ if ( WEBGL.isWebGL2Available() ) {
         earthGroup.rotation.y += rotation;
         atmosphere.rotation.y += rotation * 0.95;
         
-        const lunarOrbit = ( delta * Math.PI * 2 ) / 1; 
+        const lunarOrbit = ( delta * Math.PI * 2 ) / 28; 
         moonOrbitAngle += lunarOrbit;
         
         moon.position.x = distance * Math.cos(moonOrbitAngle);
