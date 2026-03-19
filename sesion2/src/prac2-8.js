@@ -163,7 +163,7 @@ if ( WEBGL.isWebGL2Available() ) {
         
         uniforms[ "time" ].value += 0.2 * delta;
         
-        const rotation = ( delta * Math.PI * 2 ) / 1;
+        const rotation = ( delta * Math.PI * 2 ) / 24;
         earthGroup.rotation.y += rotation;
         atmosphere.rotation.y += rotation * 0.95;
         

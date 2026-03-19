@@ -127,7 +127,7 @@ if ( WEBGL.isWebGL2Available() ) {
         
         const delta = clock.getDelta( ); 
         
-        const rotation = ( delta * Math.PI * 2 ) / 1;
+        const rotation = ( delta * Math.PI * 2 ) / 24;
         earthGroup.rotation.y += rotation;
         atmosphere.rotation.y += rotation * 0.95;
         

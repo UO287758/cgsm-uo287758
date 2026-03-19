@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Informe de prácticas de CGSM (2015-2016)</title>
+        <link rel="stylesheet" type="text/css" href="report.css">
+    </head>
+    <body>
+        <!-- Información general -->
+        <div id="head">
+            <table id="general">
+                <tr>
+                    <th class="header">Nombre:</th>
+                    <td>Manuel Fernandez Alvarez</td>                     
+                </tr>
+                <tr>
+                    <th>Práctica:</th>
+                    <td>2</td> 
+                </tr>
+            </table>
+        </div>
+        <div id="content">
+            <h1>Memoria</h1>
+            <h2>Descripción de la práctica</h2>
+                <p>En esta practica se crea un modelo 3D de una caja como primera aproximacion a las textura. Posteriomente, se crea un pequeño modelo 3D de nuestro sistema solar, este modelo incluye un sol, la tierra, la luna y la estacion espacial internacional. Se emplea el uso de texturas, shaders y modelos , cada uno para visualizar correctamente un objeto distinto. Ademas, se emplean animaciones para hacer que la tierra tenga una rotacion sobre si misma, que la atmosfera de la tierra tambien roten, y que la luna y la estacion espacial orbiten alrededor de la tierra.</p>
+            <h2>Ejercicio 1</h2>
+                <p>En esta practica se pone una textura a un cubo de 3D. Para esto, se necesita configurar el Webpack para que reconozca el nuevo script y usa un objeto llamado TextureLoader y se mapea el material a la textura.</p>
+                <iframe class="container" src="prac2-1.html">                    
+                </iframe>
+            <h2>Ejercicio 2</h2>
+                <p>En esta practica se configura una iluminación básica para dar volumen a una esfera con la textura de la tierra. Se crea una esfera con un material llamado MeshPhongMaterial, que reacciona a la luz permitiendo ver brillos y sombra, y se añade una PointLight.</p>
+                <iframe class="container" src="prac2-2.html">
+                    Escena 2
+                </iframe>
+            <h2>Ejercicio 3</h2>
+                <p>En esta practica se añade una atmosfera a la tierra y se gira 23 grados. Para esto se añade una nueva esfera con otra textura rodenado a la tierra, usando el material MeshLambertMaterial y la propedad "transparent: true".</p>
+                <iframe class="container" src="prac2-3.html">
+                    Escena 3
+                </iframe>
+            <h2>Ejercicio 4</h2>
+                <p>En esta practica se rota la tierra 23 grados. Para poder rotar tanto la tierra como su atmosfera, se utiliza un Object3D para agrupar ambos elementos.</p>
+                <iframe class="container" src="prac2-4.html">
+                    Escena 4
+                </iframe>
+            <h2>Ejercicio 5</h2>
+                <p>En esta practica se crea una nueva esfera para representar la luna. Para ello se añade una esfera con una textura de la luna y se crea a escala de la tierra.</p>
+                <iframe class="container" src="prac2-5.html">
+                    Escena 5
+                </iframe>
+            <h2>Ejercicio 6</h2>
+                <p>En esta practica se añade una animacion de rotacion a la tierra, para que gire sobre si misma. Ademas se añade una animacion a la atmosfera, para que tambien rote sobre si misma, mas lentamente que la tierra.</p>
+                <iframe class="container" src="prac2-6.html">
+                    Escena 6
+                </iframe>
+            <h2>Ejercicio 7</h2>
+                <p>En esta practica se añade una animacion de orbita a la luna para que gire alrededor de la tierra. Se usa un nuevo Object3D para posicionar la luna en una posicion relativa a la tierra, haciendo que su orbita no sea la misma que la rotacion de la tierra y que no colisione con esta.</p>
+                <iframe class="container" src="prac2-7.html">
+                    Escena 7
+                </iframe>
+            <h2>Ejercicio 8</h2>
+                <p>En esta practica se introducen Shaders para crear la esfera del Sol. Esta esfera se crea a escala de la tierra y se incluye en la posicion en la que estaba la luz, para que la escena sea realista, se desplazn la luna y la tierra. En esta practica se carga un shader en lugar de una textura.</p>
+                <iframe class="container" src="prac2-8.html">
+                    Escena 8
+                </iframe>          
+            <h2>Ejercicio 9</h2>
+                <p> En esta practica se introduce un modelo precreado de la estacion espacial internacional. Se descarga y se carga en el proyecto, para hacer que rote alrededor de la tierra se incluye en un nuevo Object3D.</p>
+                <iframe class="container" src="prac2-9.html">
+                    Escena 9
+                </iframe>                                           
+            <h2>Dificultades encontradas</h2>
+                <p>
+                    En la practica 1, se presento la dificultad de encontrar la parte del codigo en la que incluir la llamada al callback para esperar la carga de la textura. </br>
+                    En la practica 2, se presento la dificultad de configurar correctamente la intensidad de la luz y donde colocarla para que no fuese ni demasiado tenue ni demasiado intensa. </br>
+                    En la practica 3, no se presentaron dificultades. </br>
+                    En la practica 4, se presento la dificultad de saber si la tierra estaba correctamente rotada. </br>
+                    En la practica 7, se presento la dificultad de conseguir que la luna orbitase correctamente alrededor de la tierra. La orbita que seguia, hacia que chocase con la tierra en su orbita. </br>
+                    En la practica 8, se presento la dificultad de reposicionar correctamente la luna y la tierra para que no estuviesen incluidas dentro del sol. </br>
+                    En la practica 9, se presento la dificultad de posicionar correctamente el modelo de la estacion espacial internacional y hacer que rote alrededor de la tierra sin que colisione con la luna. </br>
+                </p>
+        </div>
+    </body>
+</html>
