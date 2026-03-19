@@ -1,6 +1,7 @@
 import WEBGL from 'three/examples/jsm/capabilities/WebGL.js';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader.js';
  
 if ( WEBGL.isWebGL2Available() ) {
     // WebGL is available
@@ -141,10 +142,10 @@ if ( WEBGL.isWebGL2Available() ) {
     moonGroup.position.set(-1500, 0, 0);
     
     moonGroup.add( moon );
+
+    scene.add(moonGroup);
     
     moonGroup.rotation.z = 0.089;
-    
-    scene.add(moonGroup);
     
     const sunRadius = sphereRadius * 5; 
     const sunGeometry = new THREE.SphereGeometry(sunRadius, 32, 16);
@@ -155,6 +156,31 @@ if ( WEBGL.isWebGL2Available() ) {
     scene.add(sun);
     
     let moonOrbitAngle = 0;
+    
+    const issGroup = new THREE.Object3D();
+    issGroup.position.set(-1500, 0, 0);
+    let issOrbitAngle = 0;
+    const issDistance = 300;
+
+    const modelUrl = "../models/iss.dae";
+    let iss;
+
+    const loadingManager = new THREE.LoadingManager( ( ) => {
+
+        issGroup.add( iss );
+        console.log( 'Model loaded' );
+    } );
+
+    const loader = new ColladaLoader( loadingManager );
+    loader.load( modelUrl, ( collada ) => {
+
+        iss = collada.scene;
+        iss.scale.x = iss.scale.y = iss.scale.z = 0.3;
+        iss.rotation.set( Math.PI / 5, Math.PI / 5, 0 );
+        iss.updateMatrix( );
+    } );
+
+    scene.add(issGroup);
    
     function animate() {
         requestAnimationFrame(animate);
@@ -172,6 +198,14 @@ if ( WEBGL.isWebGL2Available() ) {
         
         moon.position.x = distance * Math.cos(moonOrbitAngle);
         moon.position.z = distance * Math.sin(moonOrbitAngle);
+        
+        const issOrbit = ( delta * Math.PI * 2 ) / 10;
+        issOrbitAngle += issOrbit;
+        
+        if (iss) {
+            iss.position.x = issDistance * Math.cos(issOrbitAngle);
+            iss.position.z = issDistance * Math.sin(issOrbitAngle);
+        }
         
         controls.update();
         renderer.render(scene, camera);
