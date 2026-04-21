@@ -8,9 +8,19 @@ function init() {
     const overlay = document.getElementById('overlay');
     overlay.remove();
 
-    const video = document.getElementById('video');
-    video.play();
+    // Initialize DASH player with manifest URL
+    const url = "http://example.com/manifest.mpd"; // Replace with actual DASH manifest URL
+    const player = dashjs.MediaPlayer().create();
+    const videoElement = document.querySelector("#player");
+    player.initialize(videoElement, url, true);
+    
+    // Wait for video to be ready before starting the animation
+    videoElement.addEventListener('loadedmetadata', () => {
+        startWebGLRendering(videoElement);
+    });
+}
 
+function startWebGLRendering(video) {
     if ( WEBGL.isWebGL2Available() ) {
         // WebGL is available
         const scene = new THREE.Scene();
