@@ -15,6 +15,14 @@ canvas {
     height: 100%;
 }
 
+.videot {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    background-color: black;
+}
+
 .overlay {
     position: fixed;
     top: 0;

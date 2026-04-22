@@ -9,7 +9,7 @@ function init() {
     overlay.remove();
 
     // Initialize DASH player with manifest URL
-    const url = "http://example.com/manifest.mpd"; // Replace with actual DASH manifest URL
+    const url = "http://localhost:60080/trailer.mpd"; // Replace with actual DASH manifest URL
     const player = dashjs.MediaPlayer().create();
     const videoElement = document.querySelector("#player");
     player.initialize(videoElement, url, true);
@@ -37,15 +37,17 @@ function startWebGLRendering(video) {
         camera.position.set( 0, 0, 300 );
 
         const image = document.createElement( 'canvas' );
-        image.width = 480;  // Video width
-        image.height = 204; // Video height
+        image.width = video.videoWidth || 480;
+        image.height = video.videoHeight || 204;
         const imageContext = image.getContext( '2d' );
         imageContext.fillStyle = '#000000';
         imageContext.fillRect( 0, 0, image.width - 1, image.height - 1 );
         const texture = new THREE.Texture( image );
 
         const material = new THREE.MeshBasicMaterial( { map: texture } );
-        const wall = new THREE.Mesh( new THREE.PlaneGeometry( image.width, image.height, 4, 4 ), material );
+        const planeHeight = 204;
+        const planeWidth = planeHeight * ( image.width / image.height );
+        const wall = new THREE.Mesh( new THREE.PlaneGeometry( planeWidth, planeHeight, 4, 4 ), material );
         scene.add( wall );
 
         window.addEventListener( 'resize', ( ) => {
@@ -60,7 +62,7 @@ function startWebGLRendering(video) {
             
             // Update texture from video every frame
             if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
-                imageContext.drawImage( video, 0, 0 );
+                imageContext.drawImage( video, 0, 0, image.width, image.height );
                 texture.needsUpdate = true;
             }
             

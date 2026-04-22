@@ -4,7 +4,10 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "webpack serve",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +19,7 @@
     "webpack-dev-server": "^5.2.3"
   },
   "dependencies": {
-    "three": "^0.184.0",
-    "dashjs": "^4.5.0"
+    "dashjs": "^4.7.4",
+    "three": "^0.184.0"
   }
 }
