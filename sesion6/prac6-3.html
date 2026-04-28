@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic template for the CGSM labs</title>
+    <link rel="stylesheet" type="text/css" href="style-prac3.css">
+</head>
+<body>
+    <!-- Content of the page -->
+    <div id="container">
+
+        <!-- The element where local video is played -->
+        <video id="localVideo" autoplay="true" muted="true"></video>
+
+        <!-- The element where remote video is played -->
+        <video id="remoteVideo" autoplay="true"></video>
+
+        <div>
+            <!-- Buttons for call control -->
+            <button id="startButton" disabled="true">Start</button>
+            <button id="callButton" disabled="true">Call</button>
+            <button id="hangupButton" disabled="true">Hang up</button>
+        </div>
+
+    </div>
+
+    <script type="module" src="./src/prac6-3.js"></script>
+</body>
+</html>

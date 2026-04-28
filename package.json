@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "three": "^0.183.2"
+    "three": "^0.183.2",
+    "webrtc-adapter": "^9.0.5"
   }
 }
